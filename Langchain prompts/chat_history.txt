@@ -1,0 +1,5 @@
+# [AI GENERATED] This file was written by the assistant.
+Human: Hello!
+AI: Hi! How can I help you today?
+Human: What is LangChain?
+AI: LangChain is a framework for developing applications powered by language models.

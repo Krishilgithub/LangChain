@@ -1,0 +1,5 @@
+{
+	"_comment": "[AI GENERATED] This file was written by the assistant.",
+	"template": "You are a helpful assistant. Answer the following: {input}",
+	"input_variables": ["input"]
+}
