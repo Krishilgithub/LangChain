@@ -8,14 +8,14 @@ def generate_prompt(task: str, variable: str) -> str:
             input_variables=["text"],
             validate_template=True
         )
-        return template.invoke({"text": variable})
+        return str(template.invoke({"text": variable}))
     elif task == "question":
         template = PromptTemplate(
             template="Answer the following question: {question}",
             input_variables=["question"],
             validate_template=True
         )
-        return template.invoke({"question": variable})
+        return str(template.invoke({"question": variable}))
     else:
         return "Unknown task."
 

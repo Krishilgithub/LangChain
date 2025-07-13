@@ -1,2 +1,22 @@
-Shared
+# Ignore virtual environments
+myenv/
+venv/
+.env
+*.env
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore shared and external repos
+Shared/
+
 # as it is already a github repo shared by one of the friend repo link: https://github.com/hitanshramtani/Langchain-Learning.git
