@@ -1,16 +1,18 @@
-# [AI GENERATED] This file was written by the assistant.
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline
+import os
 
-llm = HuggingFaceEndpoint(
-    model="sentence-transformers/all-MiniLM-L6-v2",
-    task="text-generation",
-    huggingfacehub_api_token=None,  # Not needed for local models
-    timeout=60,
-    local=True
+os.environ['HF_HOME'] = 'C:/Users/Krishil Agrawal/AppData/Local/huggingface'
+
+llm = HuggingFacePipeline.from_model_id(
+    model_id='TinyLlama/TinyLlama-1.1B-Chat-v1.0',
+    task='text-generation',
+    pipeline_kwargs=dict(
+        temperature=0.5,
+        max_new_tokens=100
+    )
 )
-
 model = ChatHuggingFace(llm=llm)
 
-prompt = "Explain the importance of embeddings in NLP."
-result = model.invoke(prompt)
-print("Local Model Response:", result)
+result = model.invoke("What is the capital of India")
+
+print(result.content)

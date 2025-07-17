@@ -13,4 +13,4 @@ model = ChatGroq(
 
 prompt = "Explain the concept of transfer learning."
 result = model.invoke(prompt)
-print("Groq Model Response:", result)
+print("Groq Model Response:", result.content)

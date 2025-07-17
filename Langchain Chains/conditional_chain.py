@@ -26,44 +26,37 @@ model = ChatHuggingFace(
 parser = StrOutputParser()
 
 class Feedback(BaseModel):
-    sentiment: Literal['positive', 'negative'] = Field(
-        ..., description="The sentiment of the feedback"
-    )
-    # confidence: float = Field(
-    #     ..., ge=0.0, le=1.0, description="Confidence score of the sentiment classification"
-    # )
+
+    sentiment: Literal['positive', 'negative'] = Field(description='Give the sentiment of the feedback')
 
 parser2 = PydanticOutputParser(pydantic_object=Feedback)
 
-
 prompt1 = PromptTemplate(
-    template="Classify the sentiment of the following text as positive, negative, or neutral: {feedback} \n {format_instructions}",
+    template='Classify the sentiment of the following feedback text into postive or negative \n {feedback} \n {format_instruction}',
     input_variables=['feedback'],
-    partial_variables={'format_instructions': parser2.get_format_instructions()}
+    partial_variables={'format_instruction':parser2.get_format_instructions()}
 )
 
 classifier_chain = prompt1 | model | parser2
 
-# result = classifier_chain.invoke({'feedback': 'I love the new features of this product!'})
-
-# print(result.sentiment)
-
 prompt2 = PromptTemplate(
-    template="Write an appropriate response to this positive feedback \n {feedback}",
+    template='Write an appropriate response to this positive feedback \n {feedback}',
     input_variables=['feedback']
 )
 
 prompt3 = PromptTemplate(
-    template="Write an appropriate response to this negative feedback \n {feedback}",
+    template='Write an appropriate response to this negative feedback \n {feedback}',
     input_variables=['feedback']
 )
 
-branch_chain = classifier_chain | (lambda feedback: feedback.model_dump()) | RunnableBranch(
-    (lambda x: x['sentiment'] == 'positive', prompt2 | model | parser), # type: ignore
-    (lambda x: x['sentiment'] == 'negative', prompt3 | model | parser), # type: ignore
-    RunnableLambda(lambda x: 'could not find any sentiment')
+branch_chain = RunnableBranch(
+    (lambda x:x.sentiment == 'positive', prompt2 | model | parser), # type: ignore
+    (lambda x:x.sentiment == 'negative', prompt3 | model | parser), # type: ignore
+    RunnableLambda(lambda x: "could not find sentiment")
 )
 
 chain = classifier_chain | branch_chain
 
-chain.invoke({'feedback': 'This is a terrible phone'})
+print(chain.invoke({'feedback': 'This is a beautiful phone'}))
+
+chain.get_graph().print_ascii()

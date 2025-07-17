@@ -9,18 +9,23 @@ hf_api_key = os.getenv('HUGGINGFACEHUB_ACCESS_TOKEN')
 llm = HuggingFaceEndpoint(
     model="google/gemma-7b-it",
     task="text-generation",
-    huggingfacehub_api_token=hf_api_key,
+    huggingfacehub_api_token="hf_api_key",
     timeout=60,
 )
 
-model = ChatHuggingFace(
-    llm=llm,
-    model_kwargs={
-        "temperature": 0.5,
-    }
-)
+# model = ChatHuggingFace(
+#     llm=llm,
+#     model_kwargs={
+#         "temperature": 0.5,
+#     }
+# )
 
 prompt = "What is LangChain and how does it help with LLM applications?"
 
-result = model.invoke(prompt)
+result = llm.invoke(prompt)
 print("LLM Response:", result)
+
+#* For using OpenAI API
+# llm = OpenAI(model='gpt-3.5-turbo-instruct')
+
+# result = llm.invoke("What is the capital of India")

@@ -11,8 +11,7 @@ hf_api_key = os.getenv('HUGGINGFACEHUB_ACCESS_TOKEN')
 llm = HuggingFaceEndpoint(
     model="mistralai/Mistral-7B-Instruct-v0.2",
     task="text-generation",
-    huggingfacehub_api_token=hf_api_key,
-    timeout=60,
+    huggingfacehub_api_token=hf_api_key
 )
 
 model = ChatHuggingFace(
@@ -41,5 +40,4 @@ parser = StrOutputParser()
 chain = template1 | model | parser | template2 | model | parser
 
 result = chain.invoke({"topic": "Artificial Intelligence"})
-print("Detailed Report:\n", result[0])
-print("\nConcise Summary:\n", result[1])
+print(result)

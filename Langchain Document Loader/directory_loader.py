@@ -6,7 +6,7 @@ from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader #t
 loader = DirectoryLoader(
   path="books",
   glob="*.pdf",
-  loader_cls=PyPDFLoader
+  # loader_cls=PyPDFLoader
 )
 
 # docs = loader.load()

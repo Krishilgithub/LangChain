@@ -14,5 +14,5 @@ template = PromptTemplate(
     validate_template=True
 )
 
-prompt = template.invoke(output)
+prompt = template.invoke(dict(output))
 print(prompt)

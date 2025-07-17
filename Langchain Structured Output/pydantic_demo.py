@@ -1,18 +1,23 @@
-# [AI GENERATED] This file was written by the assistant.
-from pydantic import BaseModel
-from langchain_core.prompts import PromptTemplate
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional
 
-class Car(BaseModel):
-    make: str
-    model: str
+class Student(BaseModel):
 
-car = Car(make="Tesla", model="Model S")
+    name: str = 'Krishil Agrawal'
+    age: Optional[int] = None
+    email: EmailStr
+    cgpa: float = Field(gt=0, lt=10, default=5, description='A decimal value representing the cgpa of the student')
 
-template = PromptTemplate(
-    template="Car: {make}\nModel: {model}",
-    input_variables=["make", "model"],
-    validate_template=True
-)
 
-prompt = template.invoke(car.dict())
-print(prompt)
+new_student = {'age': 32, 'email': 'abc@gmail.com'}
+
+student = Student(**new_student)
+
+student_dict = dict(student)
+
+print(student_dict['age'])
+
+student_json = student.model_dump_json()
+
+print(student_json)
+print(student_dict)

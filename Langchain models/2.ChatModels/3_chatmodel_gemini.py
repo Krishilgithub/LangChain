@@ -13,4 +13,4 @@ model = ChatGoogleGenerativeAI(
 
 prompt = "Describe the applications of generative AI in education."
 result = model.invoke(prompt)
-print("Gemini Model Response:", result)
+print("Gemini Model Response:", result.content)
